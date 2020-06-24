@@ -1,27 +1,62 @@
 package extratolacamento.domain;
 
+import org.springframework.context.annotation.Bean;
+
+import javax.persistence.Entity;
+
+@Entity
 public class Extrato {
-    private Long id;
-    private String nome;
+    private String firstName;
+    private String lastName;
+    private String street;
+    private String city;
+    private String state;
 
-    public Extrato(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
+    public Extrato(String firstName, String lastName, String street, String city, String state) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.street = street;
+        this.city = city;
+        this.state = state;
     }
 
-    public Long getId() {
-        return id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getNome() {
-        return nome;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getStreet() {
+        return street;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
