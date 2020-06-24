@@ -1,17 +1,13 @@
 package extratolacamento.service;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import extratolacamento.domain.Extrato;
-import net.minidev.json.writer.JsonReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,26 +18,23 @@ public class ExtratoService {
 
     public List<Extrato> getExtrato() throws IOException, ParseException {
 
-        JSONParser jsonparser = new JSONParser();
+        //JSONParser jsonparser = new JSONParser();
         ArrayList<Extrato> extratos = new ArrayList<>();
 
         try {
 
-            //String absolutePath = new File("src/main/resources").getAbsolutePath();
-            //String fileName = "/extrato.json";
-            //String filePath = absolutePath + fileName;
-
+            //String fileName = "*/extrato";
+            //String filePath = fileName;
             //Object obj = jsonparser.parse(new FileReader(filePath));
             //JSONObject jsonObject = (JSONObject)obj;
-            //String quantidadeLancamentos = (String)jsonObject.get("firstName");
-            //String quantidadeRemessas = (String)jsonObject.get("lastName");
 
-            Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(Randomizer.class
-                    .getResourceAsStream("data/json/FatesSkills.json"), "UTF-8")));
-            skills = gson.fromJson(reader, skillType);
-            reader.close();
+            ObjectMapper mapper = new ObjectMapper();
+            InputStream is = getClass().getResourceAsStream("/extrato.json");
+            Object obj = mapper.readValue(is, ExtratoService.class);
+            JSONObject jsonObject = (JSONObject)obj;
 
+            String quantidadeLancamentos = (String)jsonObject.get("firstName");
+            String quantidadeRemessas = (String)jsonObject.get("lastName");
 
             extratos.add(new Extrato(1L, quantidadeLancamentos));
             extratos.add(new Extrato(2L, quantidadeRemessas));
