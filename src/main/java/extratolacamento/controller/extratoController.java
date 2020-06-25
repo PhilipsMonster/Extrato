@@ -21,7 +21,7 @@ public class extratoController {
     private ExtratoService service;
 
     @GetMapping(value = "/extrato", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Extrato>> get() throws IOException, ParseException {
+    public ResponseEntity <Extrato> get() throws IOException, ParseException {
         return ResponseEntity.ok(service.getExtrato());
     }
 }

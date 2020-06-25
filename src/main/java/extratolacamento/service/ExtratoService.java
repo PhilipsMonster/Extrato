@@ -1,8 +1,11 @@
 package extratolacamento.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import extratolacamento.domain.Extrato;
 import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -19,40 +22,49 @@ import org.json.simple.parser.ParseException;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExtratoService {
 
-    public List<Extrato> getExtrato() throws IOException, ParseException {
+    //@Autowired
+    //private Extrato extrato;
+
+    public Extrato getExtrato() throws IOException, ParseException {
 
         JSONParser jsonparser = new JSONParser();
-        ArrayList<Extrato> extratos = new ArrayList<>();
+        Extrato extrato = new Extrato();
 
-        try (FileReader reader = new FileReader("C:/Source/Extrato/src/main/resources/extrato.json"))
+        try (FileReader reader = new FileReader("/home/pi/Documents/Source/Extrato/Extrato/src/main/resources/extrato.json"))
         {
             Object obj = jsonparser.parse(reader);
             JSONObject jo = (JSONObject)obj;
+            Gson gson = new Gson();
+            byte[] jsonData = jo.toString().getBytes();
 
-            // getting firstName and lastName
-            String firstName = (String) jo.get("firstName");
-            String lastName = (String) jo.get("lastName");
+            ObjectMapper mapper = new ObjectMapper();
+            extrato = mapper.readValue(jsonData, Extrato.class);
 
-            JSONArray array = (JSONArray)jo.get("address");
-            String street = "";
-            String city = "";
-            String state = "";
+            System.out.println(reader);
+            System.out.println(extrato);
 
-            for (int i=0;i<array.size();i++)
+            //extrato = gson.fromJson(reader, Extrato.class);
+            // print staff object
+
+
+            /*JSONArray array = (JSONArray)jo.get("listaControleLancamento");
+
+            String arr[] = new String[array.size()];*/
+
+            /*for (int i=0;i<array.size();i++)
             {
-                JSONObject address = (JSONObject) array.get(i);
-                street = (String)address.get("street");
-                city = (String)address.get("city");
-                state = (String)address.get("state");
-            }
+                JSONObject lancs = (JSONObject) array.get(i);
+                Extrato extrato = gson.toJson(lancs,Extrato.class);
 
-            extratos.add(new Extrato(firstName, lastName, street, city, state));
+                arr[i] = (String)lancs.get("dataEfetivaLancamento");
+                extratos.add(arr[i]);
+            }*/
 
 
         }catch (Exception e) {
             e.printStackTrace();
         }
 
-        return extratos;
+        return extrato;
     }
 }

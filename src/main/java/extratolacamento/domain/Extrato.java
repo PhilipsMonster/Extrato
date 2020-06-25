@@ -1,62 +1,61 @@
 package extratolacamento.domain;
 
-import org.springframework.context.annotation.Bean;
-
 import javax.persistence.Entity;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Extrato {
-    private String firstName;
-    private String lastName;
-    private String street;
-    private String city;
-    private String state;
 
-    public Extrato(String firstName, String lastName, String street, String city, String state) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.street = street;
-        this.city = city;
-        this.state = state;
+    private Map<String, BigDecimal> totalControleLancamento; // map
+    private List<listaControleLancamento> listaControleLancamento;
+    private int indice;
+    private int tamanhoPagina;
+    private int totalElements;
+    /*private String[] position;              // array
+    private List<String> skills;            // list*/
+
+    public Extrato() {
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Map<String, BigDecimal> getTotalControleLancamento() {
+        return totalControleLancamento;
     }
 
-    public String getLastName() {
-        return lastName;
+    public List<extratolacamento.domain.listaControleLancamento> getListaControleLancamento() {
+        return listaControleLancamento;
     }
 
-    public String getStreet() {
-        return street;
+    public int getIndice() {
+        return indice;
     }
 
-    public String getCity() {
-        return city;
+    public int getTamanhoPagina() {
+        return tamanhoPagina;
     }
 
-    public String getState() {
-        return state;
+    public int getTotalElements() {
+        return totalElements;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setTotalControleLancamento(Map<String, BigDecimal> totalControleLancamento) {
+        this.totalControleLancamento = totalControleLancamento;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setListaControleLancamento(List<extratolacamento.domain.listaControleLancamento> listaControleLancamento) {
+        this.listaControleLancamento = listaControleLancamento;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setIndice(int indice) {
+        this.indice = indice;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setTamanhoPagina(int tamanhoPagina) {
+        this.tamanhoPagina = tamanhoPagina;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setTotalElements(int totalElements) {
+        this.totalElements = totalElements;
     }
 }
