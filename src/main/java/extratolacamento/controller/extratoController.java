@@ -1,6 +1,7 @@
 package extratolacamento.controller;
 
 import extratolacamento.domain.Extrato;
+import extratolacamento.domain.ExtratoView;
 import extratolacamento.service.ExtratoService;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class extratoController {
     private ExtratoService service;
 
     @GetMapping(value = "/extrato", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Extrato> get() throws IOException, ParseException {
+    public ResponseEntity <List<ExtratoView>> get() throws IOException, ParseException {
         return ResponseEntity.ok(service.getExtrato());
     }
 }

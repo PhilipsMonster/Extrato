@@ -11,10 +11,12 @@ import java.util.Map;
 public class ExtratoView {
     private String dataLancamentoContaCorrenteCliente;
     private String nomeTipoOperacao;
-    private Integer numeroRemessaBanco;
+    private Long numeroRemessaBanco;
     private String nomeSituacaoRemessa;
     private String dataEfetivaLancamento;
     private String nomeBanco;
+    private Integer numeroAgencia;
+    private Integer numeroContaCorrente;
     private String dadosDomicilioBancario;
     private Double valorLancamentos;
 
@@ -29,7 +31,7 @@ public class ExtratoView {
         return nomeTipoOperacao;
     }
 
-    public Integer getNumeroRemessaBanco() {
+    public Long getNumeroRemessaBanco() {
         return numeroRemessaBanco;
     }
 
@@ -43,6 +45,14 @@ public class ExtratoView {
 
     public String getNomeBanco() {
         return nomeBanco;
+    }
+
+    public Integer getNumeroAgencia() {
+        return numeroAgencia;
+    }
+
+    public Integer getNumeroContaCorrente() {
+        return numeroContaCorrente;
     }
 
     public String getDadosDomicilioBancario() {
@@ -61,7 +71,7 @@ public class ExtratoView {
         this.nomeTipoOperacao = nomeTipoOperacao;
     }
 
-    public void setNumeroRemessaBanco(Integer numeroRemessaBanco) {
+    public void setNumeroRemessaBanco(Long numeroRemessaBanco) {
         this.numeroRemessaBanco = numeroRemessaBanco;
     }
 
@@ -75,6 +85,14 @@ public class ExtratoView {
 
     public void setNomeBanco(String nomeBanco) {
         this.nomeBanco = nomeBanco;
+    }
+
+    public void setNumeroAgencia(Integer numeroAgencia) {
+        this.numeroAgencia = numeroAgencia;
+    }
+
+    public void setNumeroContaCorrente(Integer numeroContaCorrente) {
+        this.numeroContaCorrente = numeroContaCorrente;
     }
 
     public void setDadosDomicilioBancario(String dadosDomicilioBancario) {

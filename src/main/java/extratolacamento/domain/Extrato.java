@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 public class Extrato {
 
-    private Map<String, Double> totalControleLancamento; // map
+    private totalControleLancamento totalControleLancamento;
     private List<listaControleLancamento> listaControleLancamento;
     private int indice;
     private int tamanhoPagina;
@@ -23,7 +23,7 @@ public class Extrato {
     public Extrato() {
     }
 
-    public Map<String, Double> getTotalControleLancamento() {
+    public extratolacamento.domain.totalControleLancamento getTotalControleLancamento() {
         return totalControleLancamento;
     }
 
@@ -43,7 +43,7 @@ public class Extrato {
         return totalElements;
     }
 
-    public void setTotalControleLancamento(Map<String, Double> totalControleLancamento) {
+    public void setTotalControleLancamento(extratolacamento.domain.totalControleLancamento totalControleLancamento) {
         this.totalControleLancamento = totalControleLancamento;
     }
 

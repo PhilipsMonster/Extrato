@@ -27,11 +27,13 @@ public class ExtratoService {
     @Autowired
     private Extrato extrato;
     @Autowired
-    private ExtratoView extView;
+    //private ExtratoView extView;
 
-    public Extrato getExtrato() throws IOException, ParseException {
+    public List<ExtratoView> getExtrato() throws IOException, ParseException {
 
         JSONParser jsonparser = new JSONParser();
+        List<ExtratoView> extratoVL = new ArrayList<ExtratoView>();
+        ExtratoView extView;
 
         try (FileReader reader = new FileReader("/home/pi/Documents/Source/Extrato/Extrato/src/main/resources/extrato.json"))
         {
@@ -43,25 +45,24 @@ public class ExtratoService {
             ObjectMapper mapper = new ObjectMapper();
             extrato = mapper.readValue(jsonData, Extrato.class);
 
+            //System.out.println(extView.getValorLancamentos());
 
+            for (int i=0; i<extrato.getListaControleLancamento().size(); i++){
 
-           for (int i=0; i<extrato.getTotalControleLancamento().size(); i++)
-           {
+                extView = new ExtratoView();
 
-              //System.out.println(extrato.getTotalControleLancamento().getClass());
-               String codigoIdentificadorUnico = extrato.getListaControleLancamento().get(i).getCodigoIdentificadorUnico();
-               System.out.println(codigoIdentificadorUnico);
-           }
+                extView.setDataLancamentoContaCorrenteCliente(extrato.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
+                extView.setNomeTipoOperacao(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao());
+                extView.setNumeroRemessaBanco(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
+                extView.setNomeSituacaoRemessa(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
+                extView.setDataEfetivaLancamento(extrato.getListaControleLancamento().get(i).getDateEfetivaLancamento());
+                extView.setNomeBanco(extrato.getListaControleLancamento().get(i).getNomeBanco());
+                extView.setNumeroAgencia(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
+                extView.setNumeroContaCorrente(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
+                extView.setValorLancamentos(extrato.getTotalControleLancamento().getValorLancamentos());
 
-
-
-            /*for (int i=0; i<extrato.getListaControleLancamento().size(); i++){
-
-                extrato.getListaControleLancamento().get(i).getCodigoIdentificadorUnico();
-
-            }*/
-
-
+                extratoVL.add(extView);
+            }
 
             //extrato = gson.fromJson(reader, Extrato.class);
             // print staff object
@@ -85,6 +86,6 @@ public class ExtratoService {
             e.printStackTrace();
         }
 
-        return extrato;
+        return extratoVL;
     }
 }

@@ -6,7 +6,7 @@ public class lancamentoContaCorrenteCliente {
     private Long numeroRemessaBanco;
     private String[] dadosAnaliticoLancamentoFinanceiroCliente;
     private String nomeSituacaoRemessa;
-    private Map<String, Integer> dadosDomicilioBancario; // map
+    private dadosDomicilioBancario dadosDomicilioBancario;
     private String nomeTipoOperacao;
 
     public lancamentoContaCorrenteCliente() {
@@ -24,7 +24,7 @@ public class lancamentoContaCorrenteCliente {
         return nomeSituacaoRemessa;
     }
 
-    public Map<String, Integer> getDadosDomicilioBancario() {
+    public dadosDomicilioBancario getDadosDomicilioBancario() {
         return dadosDomicilioBancario;
     }
 
@@ -44,7 +44,7 @@ public class lancamentoContaCorrenteCliente {
         this.nomeSituacaoRemessa = nomeSituacaoRemessa;
     }
 
-    public void setDadosDomicilioBancario(Map<String, Integer> dadosDomicilioBancario) {
+    public void setDadosDomicilioBancario(dadosDomicilioBancario dadosDomicilioBancario) {
         this.dadosDomicilioBancario = dadosDomicilioBancario;
     }
 
