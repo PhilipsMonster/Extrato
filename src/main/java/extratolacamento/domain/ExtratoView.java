@@ -3,8 +3,6 @@ package extratolacamento.domain;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
-import java.math.BigDecimal;
-import java.util.Map;
 
 @Entity
 @Component
