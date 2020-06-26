@@ -1,14 +1,18 @@
 package extratolacamento.domain;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @Entity
+@Component
 public class Extrato {
 
-    private Map<String, BigDecimal> totalControleLancamento; // map
+    private Map<String, Double> totalControleLancamento; // map
     private List<listaControleLancamento> listaControleLancamento;
     private int indice;
     private int tamanhoPagina;
@@ -19,7 +23,7 @@ public class Extrato {
     public Extrato() {
     }
 
-    public Map<String, BigDecimal> getTotalControleLancamento() {
+    public Map<String, Double> getTotalControleLancamento() {
         return totalControleLancamento;
     }
 
@@ -39,7 +43,7 @@ public class Extrato {
         return totalElements;
     }
 
-    public void setTotalControleLancamento(Map<String, BigDecimal> totalControleLancamento) {
+    public void setTotalControleLancamento(Map<String, Double> totalControleLancamento) {
         this.totalControleLancamento = totalControleLancamento;
     }
 

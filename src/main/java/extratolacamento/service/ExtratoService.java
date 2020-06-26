@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import extratolacamento.domain.Extrato;
+import extratolacamento.domain.ExtratoView;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,13 +24,14 @@ import org.json.simple.parser.ParseException;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExtratoService {
 
-    //@Autowired
-    //private Extrato extrato;
+    @Autowired
+    private Extrato extrato;
+    @Autowired
+    private ExtratoView extView;
 
     public Extrato getExtrato() throws IOException, ParseException {
 
         JSONParser jsonparser = new JSONParser();
-        Extrato extrato = new Extrato();
 
         try (FileReader reader = new FileReader("/home/pi/Documents/Source/Extrato/Extrato/src/main/resources/extrato.json"))
         {
@@ -40,8 +43,25 @@ public class ExtratoService {
             ObjectMapper mapper = new ObjectMapper();
             extrato = mapper.readValue(jsonData, Extrato.class);
 
-            System.out.println(reader);
-            System.out.println(extrato);
+
+
+           for (int i=0; i<extrato.getTotalControleLancamento().size(); i++)
+           {
+
+              //System.out.println(extrato.getTotalControleLancamento().getClass());
+               String codigoIdentificadorUnico = extrato.getListaControleLancamento().get(i).getCodigoIdentificadorUnico();
+               System.out.println(codigoIdentificadorUnico);
+           }
+
+
+
+            /*for (int i=0; i<extrato.getListaControleLancamento().size(); i++){
+
+                extrato.getListaControleLancamento().get(i).getCodigoIdentificadorUnico();
+
+            }*/
+
+
 
             //extrato = gson.fromJson(reader, Extrato.class);
             // print staff object

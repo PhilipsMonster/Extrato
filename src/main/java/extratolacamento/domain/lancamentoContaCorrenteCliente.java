@@ -3,7 +3,7 @@ package extratolacamento.domain;
 import java.util.Map;
 
 public class lancamentoContaCorrenteCliente {
-    private String numeroRemessaBanco;
+    private Long numeroRemessaBanco;
     private String[] dadosAnaliticoLancamentoFinanceiroCliente;
     private String nomeSituacaoRemessa;
     private Map<String, Integer> dadosDomicilioBancario; // map
@@ -12,7 +12,7 @@ public class lancamentoContaCorrenteCliente {
     public lancamentoContaCorrenteCliente() {
     }
 
-    public String getNumeroRemessaBanco() {
+    public Long getNumeroRemessaBanco() {
         return numeroRemessaBanco;
     }
 
@@ -32,7 +32,7 @@ public class lancamentoContaCorrenteCliente {
         return nomeTipoOperacao;
     }
 
-    public void setNumeroRemessaBanco(String numeroRemessaBanco) {
+    public void setNumeroRemessaBanco(Long numeroRemessaBanco) {
         this.numeroRemessaBanco = numeroRemessaBanco;
     }
 
