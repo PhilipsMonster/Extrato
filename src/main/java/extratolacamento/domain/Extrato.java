@@ -1,5 +1,6 @@
 package extratolacamento.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Extrato {
 
     private TotalControleLancamento totalControleLancamento;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ExtratoController {
@@ -20,6 +21,12 @@ public class ExtratoController {
 
     @GetMapping(value = "/extrato", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <List<ExtratoView>> get() throws IOException, ParseException {
-        return ResponseEntity.ok(service.getExtrato());
+        //return ResponseEntity.ok(service.getExtrato());
+        List<ExtratoView> extratos = service.getExtrato();
+
+        return extratos.isEmpty() ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.ok(extratos);
+
     }
 }

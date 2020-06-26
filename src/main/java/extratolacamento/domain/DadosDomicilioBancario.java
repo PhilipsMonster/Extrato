@@ -1,5 +1,8 @@
 package extratolacamento.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DadosDomicilioBancario {
     private Integer numeroContaCorrente;
     private Integer codigoBanco;

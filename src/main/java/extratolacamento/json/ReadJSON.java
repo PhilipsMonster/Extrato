@@ -28,26 +28,26 @@ public class ReadJSON {
     }
 
     public Extrato JsonToObject()
-{
+    {
 
-    JSONParser jsonparser = new JSONParser();
+        JSONParser jsonparser = new JSONParser();
 
-    try (FileReader reader = new FileReader(jsonPath)) {
-        Object obj = jsonparser.parse(reader);
-        JSONObject jo = (JSONObject) obj;
-        Gson gson = new Gson();
-        byte[] jsonData = jo.toString().getBytes();
+        try (FileReader reader = new FileReader(jsonPath)) {
+            Object obj = jsonparser.parse(reader);
+            JSONObject jo = (JSONObject) obj;
+            Gson gson = new Gson();
+            byte[] jsonData = jo.toString().getBytes();
 
-        ObjectMapper mapper = new ObjectMapper();
-        extrato = mapper.readValue(jsonData, Extrato.class);
+            ObjectMapper mapper = new ObjectMapper();
+            extrato = mapper.readValue(jsonData, Extrato.class);
 
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    } catch (ParseException e) {
-        e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  extrato;
     }
-    return  extrato;
-}
 }

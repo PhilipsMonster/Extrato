@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.simple.parser.ParseException;
 
@@ -47,27 +48,47 @@ public class ExtratoServiceImpl implements ExtratoService {
                 String tipoOperacao;
                 String valorLancamento;
 
-                extView.setDataLancamentoContaCorrenteCliente(ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
+                //Dados do lançamento na conta
+                if (ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente() != null){
+                    extView.setDataLancamentoContaCorrenteCliente(ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
+                }
 
-                tipoOperacao = ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
-                extView.setNomeTipoOperacao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
+                if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao() != null){
+                    tipoOperacao = ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
+                    extView.setNomeTipoOperacao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
+                }
 
-                extView.setNumeroRemessaBanco(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
-                extView.setNomeSituacaoRemessa(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
-                extView.setDataEfetivaLancamento(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento());
+                if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco() != null){
+                    extView.setNumeroRemessaBanco(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
+                }
 
-                //Dados bancários
-                nomeBanco = ext.getListaControleLancamento().get(i).getNomeBanco();
-                numeroAgencia = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
-                numeroContaCorrente = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
-                dadosBancarios = nomeBanco.trim() +"Ag "+ numeroAgencia + " CC " + numeroContaCorrente;
-                extView.setDadosDomicilioBancario(dadosBancarios);
+                if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa() != null){
+                    extView.setNomeSituacaoRemessa(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
+                }
 
-                //Valor de lançamento com tratamento de moeda
-                valorLancamento = format.configurarMoeda(ext.getTotalControleLancamento().getValorLancamentos());
-                extView.setValorLancamentos(valorLancamento);
+                if(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento() != null){
+                    extView.setDataEfetivaLancamento(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento());
+                }
+
+                //Dados do domicílio bancário
+                if(ext.getListaControleLancamento().get(i).getNomeBanco() != null
+                        || ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia() != null
+                        ||ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente() != null){
+                    nomeBanco = ext.getListaControleLancamento().get(i).getNomeBanco();
+                    numeroAgencia = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
+                    numeroContaCorrente = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
+                    dadosBancarios = nomeBanco.trim() +"Ag "+ numeroAgencia + " CC " + numeroContaCorrente;
+                    extView.setDadosDomicilioBancario(dadosBancarios);
+                }
+
+                //Valor de lançamento (com o tratamento de moeda)
+                if(ext.getTotalControleLancamento().getValorLancamentos() != null){
+                    valorLancamento = format.configurarMoeda(ext.getTotalControleLancamento().getValorLancamentos());
+                    extView.setValorLancamentos(valorLancamento);
+                }
 
                 extratoVL.add(extView);
+
             }
 
         }catch (Exception e) {
