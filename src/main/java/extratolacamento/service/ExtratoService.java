@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import extratolacamento.domain.Extrato;
 import extratolacamento.domain.ExtratoView;
+import extratolacamento.util.FormatarMoedas;
+import org.javamoney.moneta.FastMoney;
+import org.javamoney.moneta.Money;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +23,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
+
 @Service
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExtratoService {
 
     @Autowired
     private Extrato extrato;
+
     @Autowired
-    //private ExtratoView extView;
+    private FormatarMoedas format;
 
     public List<ExtratoView> getExtrato() throws IOException, ParseException {
 
@@ -45,42 +53,38 @@ public class ExtratoService {
             ObjectMapper mapper = new ObjectMapper();
             extrato = mapper.readValue(jsonData, Extrato.class);
 
-            //System.out.println(extView.getValorLancamentos());
-
             for (int i=0; i<extrato.getListaControleLancamento().size(); i++){
 
                 extView = new ExtratoView();
+                String dadosBancarios;
+                String nomeBanco;
+                String numeroAgencia;
+                String numeroContaCorrente;
+                String tipoOperacao;
+                String valorLancamento;
 
                 extView.setDataLancamentoContaCorrenteCliente(extrato.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
-                extView.setNomeTipoOperacao(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao());
+
+                tipoOperacao = extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
+                extView.setNomeTipoOperacao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
+
                 extView.setNumeroRemessaBanco(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
                 extView.setNomeSituacaoRemessa(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
-                extView.setDataEfetivaLancamento(extrato.getListaControleLancamento().get(i).getDateEfetivaLancamento());
-                extView.setNomeBanco(extrato.getListaControleLancamento().get(i).getNomeBanco());
-                extView.setNumeroAgencia(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
-                extView.setNumeroContaCorrente(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
-                extView.setValorLancamentos(extrato.getTotalControleLancamento().getValorLancamentos());
+                extView.setDataEfetivaLancamento(extrato.getListaControleLancamento().get(i).getDataEfetivaLancamento());
+
+                //Dados bancários
+                nomeBanco = extrato.getListaControleLancamento().get(i).getNomeBanco();
+                numeroAgencia = String.valueOf(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
+                numeroContaCorrente = String.valueOf(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
+                dadosBancarios = nomeBanco.trim() +"Ag "+ numeroAgencia + " CC " + numeroContaCorrente;
+                extView.setDadosDomicilioBancario(dadosBancarios);
+
+                //Valor de lançamento com tratamento de moeda
+                valorLancamento = format.configurarMoeda(extrato.getTotalControleLancamento().getValorLancamentos());
+                extView.setValorLancamentos(valorLancamento);
 
                 extratoVL.add(extView);
             }
-
-            //extrato = gson.fromJson(reader, Extrato.class);
-            // print staff object
-
-
-            /*JSONArray array = (JSONArray)jo.get("listaControleLancamento");
-
-            String arr[] = new String[array.size()];*/
-
-            /*for (int i=0;i<array.size();i++)
-            {
-                JSONObject lancs = (JSONObject) array.get(i);
-                Extrato extrato = gson.toJson(lancs,Extrato.class);
-
-                arr[i] = (String)lancs.get("dataEfetivaLancamento");
-                extratos.add(arr[i]);
-            }*/
-
 
         }catch (Exception e) {
             e.printStackTrace();

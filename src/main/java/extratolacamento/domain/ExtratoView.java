@@ -14,11 +14,8 @@ public class ExtratoView {
     private Long numeroRemessaBanco;
     private String nomeSituacaoRemessa;
     private String dataEfetivaLancamento;
-    private String nomeBanco;
-    private Integer numeroAgencia;
-    private Integer numeroContaCorrente;
     private String dadosDomicilioBancario;
-    private Double valorLancamentos;
+    private String valorLancamentos;
 
     public ExtratoView() {
     }
@@ -43,23 +40,11 @@ public class ExtratoView {
         return dataEfetivaLancamento;
     }
 
-    public String getNomeBanco() {
-        return nomeBanco;
-    }
-
-    public Integer getNumeroAgencia() {
-        return numeroAgencia;
-    }
-
-    public Integer getNumeroContaCorrente() {
-        return numeroContaCorrente;
-    }
-
     public String getDadosDomicilioBancario() {
         return dadosDomicilioBancario;
     }
 
-    public Double getValorLancamentos() {
+    public String getValorLancamentos() {
         return valorLancamentos;
     }
 
@@ -83,23 +68,11 @@ public class ExtratoView {
         this.dataEfetivaLancamento = dataEfetivaLancamento;
     }
 
-    public void setNomeBanco(String nomeBanco) {
-        this.nomeBanco = nomeBanco;
-    }
-
-    public void setNumeroAgencia(Integer numeroAgencia) {
-        this.numeroAgencia = numeroAgencia;
-    }
-
-    public void setNumeroContaCorrente(Integer numeroContaCorrente) {
-        this.numeroContaCorrente = numeroContaCorrente;
-    }
-
     public void setDadosDomicilioBancario(String dadosDomicilioBancario) {
         this.dadosDomicilioBancario = dadosDomicilioBancario;
     }
 
-    public void setValorLancamentos(Double valorLancamentos) {
+    public void setValorLancamentos(String valorLancamentos) {
         this.valorLancamentos = valorLancamentos;
     }
 }
