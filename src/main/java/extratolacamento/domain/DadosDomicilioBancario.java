@@ -1,11 +1,11 @@
 package extratolacamento.domain;
 
-public class dadosDomicilioBancario {
+public class DadosDomicilioBancario {
     private Integer numeroContaCorrente;
     private Integer codigoBanco;
     private Integer numeroAgencia;
 
-    public dadosDomicilioBancario() {
+    public DadosDomicilioBancario() {
     }
 
     public Integer getNumeroContaCorrente() {

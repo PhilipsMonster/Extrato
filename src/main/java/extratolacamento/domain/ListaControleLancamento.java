@@ -1,10 +1,7 @@
 package extratolacamento.domain;
 
-import java.math.BigDecimal;
-import java.util.Map;
-
-public class listaControleLancamento {
-    private lancamentoContaCorrenteCliente lancamentoContaCorrenteCliente;
+public class ListaControleLancamento {
+    private LancamentoContaCorrenteCliente lancamentoContaCorrenteCliente;
     private String dataEfetivaLancamento;
     private String dataLancamentoContaCorrenteCliente;
     private String numeroEvento;
@@ -18,10 +15,10 @@ public class listaControleLancamento {
     private String dateLancamentoContaCorrenteCliente;
     private String dateEfetivaLancamento;
 
-    public listaControleLancamento() {
+    public ListaControleLancamento() {
     }
 
-    public extratolacamento.domain.lancamentoContaCorrenteCliente getLancamentoContaCorrenteCliente() {
+    public LancamentoContaCorrenteCliente getLancamentoContaCorrenteCliente() {
         return lancamentoContaCorrenteCliente;
     }
 
@@ -73,7 +70,7 @@ public class listaControleLancamento {
         return dateEfetivaLancamento;
     }
 
-    public void setLancamentoContaCorrenteCliente(extratolacamento.domain.lancamentoContaCorrenteCliente lancamentoContaCorrenteCliente) {
+    public void setLancamentoContaCorrenteCliente(LancamentoContaCorrenteCliente lancamentoContaCorrenteCliente) {
         this.lancamentoContaCorrenteCliente = lancamentoContaCorrenteCliente;
     }
 

@@ -1,15 +1,13 @@
 package extratolacamento.domain;
 
-import java.util.Map;
-
-public class lancamentoContaCorrenteCliente {
+public class LancamentoContaCorrenteCliente {
     private Long numeroRemessaBanco;
     private String[] dadosAnaliticoLancamentoFinanceiroCliente;
     private String nomeSituacaoRemessa;
-    private dadosDomicilioBancario dadosDomicilioBancario;
+    private DadosDomicilioBancario dadosDomicilioBancario;
     private String nomeTipoOperacao;
 
-    public lancamentoContaCorrenteCliente() {
+    public LancamentoContaCorrenteCliente() {
     }
 
     public Long getNumeroRemessaBanco() {
@@ -24,7 +22,7 @@ public class lancamentoContaCorrenteCliente {
         return nomeSituacaoRemessa;
     }
 
-    public dadosDomicilioBancario getDadosDomicilioBancario() {
+    public DadosDomicilioBancario getDadosDomicilioBancario() {
         return dadosDomicilioBancario;
     }
 
@@ -44,7 +42,7 @@ public class lancamentoContaCorrenteCliente {
         this.nomeSituacaoRemessa = nomeSituacaoRemessa;
     }
 
-    public void setDadosDomicilioBancario(dadosDomicilioBancario dadosDomicilioBancario) {
+    public void setDadosDomicilioBancario(DadosDomicilioBancario dadosDomicilioBancario) {
         this.dadosDomicilioBancario = dadosDomicilioBancario;
     }
 

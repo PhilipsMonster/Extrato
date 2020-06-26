@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class extratoController {
+public class ExtratoController {
 
     @Autowired
     private ExtratoService service;

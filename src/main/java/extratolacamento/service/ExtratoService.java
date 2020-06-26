@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import extratolacamento.domain.Extrato;
 import extratolacamento.domain.ExtratoView;
+import extratolacamento.json.ReadJSON;
 import extratolacamento.util.FormatarMoedas;
 import org.javamoney.moneta.FastMoney;
 import org.javamoney.moneta.Money;
@@ -37,23 +38,18 @@ public class ExtratoService {
     @Autowired
     private FormatarMoedas format;
 
+    @Autowired
+    private ReadJSON readJson;
+
     public List<ExtratoView> getExtrato() throws IOException, ParseException {
 
-        JSONParser jsonparser = new JSONParser();
-        List<ExtratoView> extratoVL = new ArrayList<ExtratoView>();
         ExtratoView extView;
+        List<ExtratoView> extratoVL = new ArrayList<ExtratoView>();
+        Extrato ext = readJson.JsonToObject();
 
-        try (FileReader reader = new FileReader("/home/pi/Documents/Source/Extrato/Extrato/src/main/resources/extrato.json"))
+        try
         {
-            Object obj = jsonparser.parse(reader);
-            JSONObject jo = (JSONObject)obj;
-            Gson gson = new Gson();
-            byte[] jsonData = jo.toString().getBytes();
-
-            ObjectMapper mapper = new ObjectMapper();
-            extrato = mapper.readValue(jsonData, Extrato.class);
-
-            for (int i=0; i<extrato.getListaControleLancamento().size(); i++){
+            for (int i=0; i<ext.getListaControleLancamento().size(); i++){
 
                 extView = new ExtratoView();
                 String dadosBancarios;
@@ -63,24 +59,24 @@ public class ExtratoService {
                 String tipoOperacao;
                 String valorLancamento;
 
-                extView.setDataLancamentoContaCorrenteCliente(extrato.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
+                extView.setDataLancamentoContaCorrenteCliente(ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
 
-                tipoOperacao = extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
+                tipoOperacao = ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
                 extView.setNomeTipoOperacao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
 
-                extView.setNumeroRemessaBanco(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
-                extView.setNomeSituacaoRemessa(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
-                extView.setDataEfetivaLancamento(extrato.getListaControleLancamento().get(i).getDataEfetivaLancamento());
+                extView.setNumeroRemessaBanco(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
+                extView.setNomeSituacaoRemessa(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
+                extView.setDataEfetivaLancamento(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento());
 
                 //Dados bancários
-                nomeBanco = extrato.getListaControleLancamento().get(i).getNomeBanco();
-                numeroAgencia = String.valueOf(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
-                numeroContaCorrente = String.valueOf(extrato.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
+                nomeBanco = ext.getListaControleLancamento().get(i).getNomeBanco();
+                numeroAgencia = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
+                numeroContaCorrente = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
                 dadosBancarios = nomeBanco.trim() +"Ag "+ numeroAgencia + " CC " + numeroContaCorrente;
                 extView.setDadosDomicilioBancario(dadosBancarios);
 
                 //Valor de lançamento com tratamento de moeda
-                valorLancamento = format.configurarMoeda(extrato.getTotalControleLancamento().getValorLancamentos());
+                valorLancamento = format.configurarMoeda(ext.getTotalControleLancamento().getValorLancamentos());
                 extView.setValorLancamentos(valorLancamento);
 
                 extratoVL.add(extView);

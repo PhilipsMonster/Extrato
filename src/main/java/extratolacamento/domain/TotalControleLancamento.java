@@ -1,11 +1,11 @@
 package extratolacamento.domain;
 
-public class totalControleLancamento {
+public class TotalControleLancamento {
     private Integer quantidadeLancamentos;
     private Integer quantidadeRemessas;
     private Double valorLancamentos;
 
-    public totalControleLancamento() {
+    public TotalControleLancamento() {
     }
 
     public Integer getQuantidadeLancamentos() {
