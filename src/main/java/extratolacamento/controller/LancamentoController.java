@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class ExtratoController {
+public class LancamentoController {
 
     @Autowired
     private ExtratoService service;
