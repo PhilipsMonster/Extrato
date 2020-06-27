@@ -1,8 +1,8 @@
 package extratolacamento.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import extratolacamento.domain.Extrato;
-import extratolacamento.domain.ExtratoView;
+import extratolacamento.domain.Lancamento;
+import extratolacamento.domain.LancamentoResumido;
 import extratolacamento.json.ReadJSON;
 import extratolacamento.service.ExtratoService;
 import extratolacamento.util.FormatarMoedas;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.json.simple.parser.ParseException;
 
@@ -21,7 +20,7 @@ import org.json.simple.parser.ParseException;
 public class ExtratoServiceImpl implements ExtratoService {
 
     @Autowired
-    private Extrato extrato;
+    private Lancamento lancamento;
 
     @Autowired
     private FormatarMoedas format;
@@ -30,17 +29,17 @@ public class ExtratoServiceImpl implements ExtratoService {
     private ReadJSON readJson;
 
     @Override
-    public List<ExtratoView> getExtrato() throws IOException, ParseException {
+    public List<LancamentoResumido> getLancamento() throws IOException, ParseException {
 
-        ExtratoView extView;
-        List<ExtratoView> extratoVL = new ArrayList<ExtratoView>();
-        Extrato ext = readJson.JsonToObject();
+        LancamentoResumido extView;
+        List<LancamentoResumido> extratoVL = new ArrayList<LancamentoResumido>();
+        Lancamento ext = readJson.JsonToObject();
 
         try
         {
             for (int i=0; i<ext.getListaControleLancamento().size(); i++){
 
-                extView = new ExtratoView();
+                extView = new LancamentoResumido();
                 String dadosBancarios;
                 String nomeBanco;
                 String numeroAgencia;
@@ -50,24 +49,24 @@ public class ExtratoServiceImpl implements ExtratoService {
 
                 //Dados do lançamento na conta
                 if (ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente() != null){
-                    extView.setDataLancamentoContaCorrenteCliente(ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
+                    extView.setDataLancamento(ext.getListaControleLancamento().get(i).getDataLancamentoContaCorrenteCliente());
                 }
 
                 if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao() != null){
                     tipoOperacao = ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeTipoOperacao();
-                    extView.setNomeTipoOperacao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
+                    extView.setDescricao(tipoOperacao.substring(0,1).toUpperCase() + tipoOperacao.substring(1));
                 }
 
                 if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco() != null){
-                    extView.setNumeroRemessaBanco(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
+                    extView.setNumero(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNumeroRemessaBanco());
                 }
 
                 if(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa() != null){
-                    extView.setNomeSituacaoRemessa(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
+                    extView.setSituacao(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getNomeSituacaoRemessa());
                 }
 
                 if(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento() != null){
-                    extView.setDataEfetivaLancamento(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento());
+                    extView.setDataConfirmacao(ext.getListaControleLancamento().get(i).getDataEfetivaLancamento());
                 }
 
                 //Dados do domicílio bancário
@@ -78,13 +77,13 @@ public class ExtratoServiceImpl implements ExtratoService {
                     numeroAgencia = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroAgencia());
                     numeroContaCorrente = String.valueOf(ext.getListaControleLancamento().get(i).getLancamentoContaCorrenteCliente().getDadosDomicilioBancario().getNumeroContaCorrente());
                     dadosBancarios = nomeBanco.trim() +"Ag "+ numeroAgencia + " CC " + numeroContaCorrente;
-                    extView.setDadosDomicilioBancario(dadosBancarios);
+                    extView.setDadosBancarios(dadosBancarios);
                 }
 
                 //Valor de lançamento (com o tratamento de moeda)
                 if(ext.getTotalControleLancamento().getValorLancamentos() != null){
                     valorLancamento = format.configurarMoeda(ext.getTotalControleLancamento().getValorLancamentos());
-                    extView.setValorLancamentos(valorLancamento);
+                    extView.setValorFinal(valorLancamento);
                 }
 
                 extratoVL.add(extView);

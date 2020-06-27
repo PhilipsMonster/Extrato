@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Component
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Extrato {
+public class Lancamento {
 
     private TotalControleLancamento totalControleLancamento;
     private List<ListaControleLancamento> listaControleLancamento;
@@ -19,7 +19,7 @@ public class Extrato {
     /*private String[] position;              // array
     private List<String> skills;            // list*/
 
-    public Extrato() {
+    public Lancamento() {
     }
 
     public TotalControleLancamento getTotalControleLancamento() {

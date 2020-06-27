@@ -2,8 +2,7 @@ package extratolacamento.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import extratolacamento.domain.Extrato;
-import extratolacamento.domain.ExtratoView;
+import extratolacamento.domain.Lancamento;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -19,7 +18,7 @@ import java.io.IOException;
 public class ReadJSON {
 
     @Autowired
-    private Extrato extrato;
+    private Lancamento lancamento;
 
     @Value("${file.reader.json-path}")
     private String jsonPath;
@@ -27,7 +26,7 @@ public class ReadJSON {
     public ReadJSON() {
     }
 
-    public Extrato JsonToObject()
+    public Lancamento JsonToObject()
     {
 
         JSONParser jsonparser = new JSONParser();
@@ -39,7 +38,7 @@ public class ReadJSON {
             byte[] jsonData = jo.toString().getBytes();
 
             ObjectMapper mapper = new ObjectMapper();
-            extrato = mapper.readValue(jsonData, Extrato.class);
+            lancamento = mapper.readValue(jsonData, Lancamento.class);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -48,6 +47,6 @@ public class ReadJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return  extrato;
+        return lancamento;
     }
 }
