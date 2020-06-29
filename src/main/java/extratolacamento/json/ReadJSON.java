@@ -20,6 +20,11 @@ public class ReadJSON {
     @Autowired
     private Lancamento lancamento;
 
+    /*********************************
+     * Alterar no properties o path (caminho completo) do arquivo lancamentos.json
+     * No meu computador Windows, como exemplo: C:/Source/Extrato/src/main/resources/lancamentos.json
+     * No meu computador Linux, como exemplo: /home/pi/Documents/Source/Extrato/Extrato/src/main/resources/lancamentos.json
+     */
     @Value("${file.reader.json-path}")
     private String jsonPath;
 

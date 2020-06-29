@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ExtratoService {
 
-    public List<LancamentoResumido> getLancamento() throws IOException, ParseException;
+    public List<LancamentoResumido> getLancamentos() throws IOException, ParseException;
 }

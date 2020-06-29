@@ -18,10 +18,10 @@ public class LancamentoController {
     @Autowired
     private ExtratoService service;
 
-    @GetMapping(value = "/extrato/lancamentos", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/v1/extratos/lancamentos", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <List<LancamentoResumido>> get() throws IOException, ParseException {
         //return ResponseEntity.ok(service.getExtrato());
-        List<LancamentoResumido> extratos = service.getLancamento();
+        List<LancamentoResumido> extratos = service.getLancamentos();
 
         return extratos.isEmpty() ?
                 ResponseEntity.noContent().build() :

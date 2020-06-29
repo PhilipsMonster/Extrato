@@ -29,7 +29,7 @@ public class ExtratoServiceImpl implements ExtratoService {
     private ReadJSON readJson;
 
     @Override
-    public List<LancamentoResumido> getLancamento() throws IOException, ParseException {
+    public List<LancamentoResumido> getLancamentos() throws IOException, ParseException {
 
         LancamentoResumido lancResum;
         List<LancamentoResumido> lancsRes = new ArrayList<LancamentoResumido>();
@@ -82,7 +82,7 @@ public class ExtratoServiceImpl implements ExtratoService {
 
                 //Valor de lançamento (com o tratamento de moeda)
                 if(lanc.getTotalControleLancamento().getValorLancamentos() != null){
-                    valorLancamento = format.configurarMoeda(lanc.getTotalControleLancamento().getValorLancamentos());
+                    valorLancamento = format.configMoeda(lanc.getTotalControleLancamento().getValorLancamentos());
                     lancResum.setValorFinal(valorLancamento);
                 }
 

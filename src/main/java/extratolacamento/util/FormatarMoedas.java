@@ -12,7 +12,7 @@ public class FormatarMoedas {
     public FormatarMoedas() {
     }
 
-    public String configurarMoeda(Double valor){
+    public String configMoeda(Double valor){
 
         Locale localBrasil = new Locale("pt", "BR");
         brl = NumberFormat.getCurrencyInstance(localBrasil).format(valor);
